@@ -8,12 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var controller = ThreadController(currentBasket: <#Basket#>)
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            List {
+                Section("Childs"){
+                    
+                }
+            }
+            .frame(height: UIScreen.main.bounds.height/2)
+            VStack{
+                HStack(){
+                    Text("Balls on basket: ")
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                HStack() {
+                    Text("Maximum capacity: ")
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                
+            }
+            Spacer()
         }
         .padding()
     }

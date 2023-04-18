@@ -7,30 +7,29 @@
 
 import Foundation
 
-protocol Thread {
-    func run()
-    func updateView()
-}
 
-class Child: Thread {
+
+class Child {
     
     var id = UUID()
-    var ball: Bola?
+    var ball: Bool
     var timePlaying: Int
     var timeResting: Int
     
-    init(ball: Bola? = nil, timePlaying: Int, timeResting: Int) {
+    private(set) var isDead: Bool = false
+    
+    init(ball: Bool = false, timePlaying: Int, timeResting: Int) {
         self.ball = ball
         self.timePlaying = timePlaying
         self.timeResting = timeResting
     }
     
-    func run() {
-        <#code#>
+    deinit {
+        isDead = true
     }
     
-    func updateView() {
-        <#code#>
+    func play() {
+        
     }
     
 }
