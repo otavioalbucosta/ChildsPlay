@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var controller = ThreadController(currentBasket: <#Basket#>)
     var body: some View {
         VStack {
             List {
