@@ -24,9 +24,6 @@ class Basket: ObservableObject {
         
     }
     
-    func newBall() {
-        
-    }
     
     func removeBall() -> Bool{
         if ballCount > 0 {

@@ -27,7 +27,7 @@ class Child: Identifiable{
         self.list = list
     }
     
-    @objc func decrementTimer() {
+    func decrementTimer() {
         self.currentTime -= 1
         
     }
@@ -38,24 +38,25 @@ class Child: Identifiable{
         currentTime = timePlaying
         isWaiting = false
         while(currentTime > 0){
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                print("Brincando, tempo restante: \(self!.currentTime)")
-                self!.decrementTimer()
-                self?.updateView()
-            }
-            sleep(1)
+            print("Brincando, tempo restante: \(self.currentTime)")
+            self.decrementTimer()
+            self.updateView()
+            //O sleep é no while, que é no processo principal, a Thread NUNCA da sleep
+            //O sleep é feito pro while não gerar Threads incessantemente
+//            sleep(1)
         }
     }
     
     func rest() {
         currentTime = timeResting
         while(currentTime > 0){
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                print("Descansando, tempo restante: \(self!.currentTime)")
-                self!.decrementTimer()
-                self?.updateView()
+            print("Descansando, tempo restante: \(self.currentTime)")
+            self.decrementTimer()
+            DispatchQueue.main.async {
+                self.updateView()
             }
-            sleep(1)
+
+//            sleep(1)
         }
         isWaiting = true
     }

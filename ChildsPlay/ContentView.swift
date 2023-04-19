@@ -33,10 +33,10 @@ struct ContentView: View {
 										Animation(name: "brinq", totalFrames: 2)
 											.scaledToFit()
 									} else if child.isWaiting  {
-										Animation(name: "comida", totalFrames: 4)
+										Animation(name: "child", totalFrames: 4)
 											.scaledToFit()
 									} else if !child.ball {
-										Animation(name: "child", totalFrames: 4)
+										Animation(name: "comida", totalFrames: 4)
 											.scaledToFit()
 									}
                                 }
