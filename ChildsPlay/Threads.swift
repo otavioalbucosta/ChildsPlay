@@ -47,7 +47,7 @@ extension Child: Thread {
     
     func updateView() {
         
-//        self.list.children = self.list.children.map({$0})
+        self.list.children = self.list.children.map({$0})
     }
     
 }

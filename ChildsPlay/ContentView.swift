@@ -45,7 +45,7 @@ struct ContentView: View {
                                     Text("Tempo \(child.ball ? "jogando" : "descansando")")
 										.padding()
 										.multilineTextAlignment(.leading)
-									Text("\(child.currentTime)")
+//                                    Text("\(child.currentTime?.timeIntervalSinceNow)")
                                 }
 							}.frame(height: UIScreen.main.bounds.height / 12)
                         }
