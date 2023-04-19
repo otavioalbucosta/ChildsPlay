@@ -18,6 +18,7 @@ class ChildrenList: ObservableObject{
 struct ContentView: View {
 
     @ObservedObject var list: ChildrenList = ChildrenList()
+	@State var toggleCreateChildSheet: Bool = false
     
     var body: some View {
         VStack {
@@ -55,21 +56,10 @@ struct ContentView: View {
             }
             .frame(height: UIScreen.main.bounds.height/2)
             HStack {
-                Button("Add w Ball") {
-                    var child = Child(ball: true,timePlaying: 5, timeResting: 5, list: list)
-                    list.children.append(child)
-                    DispatchQueue.global(qos: .background).async {
-                        child.run()
-                    }
-                }
-                Button("Add no Ball") {
-                    var child = Child(ball: false,timePlaying: 5, timeResting: 5, list: list)
-                    list.children.append(child)
-                    DispatchQueue.global(qos: .background).async {
-                        child.run()
-                    }
-                }
-                
+                Button("Add kid") {
+					toggleCreateChildSheet.toggle()
+					
+				}.sheet(isPresented: $toggleCreateChildSheet) { ChildSheet(list: list) }
             }
             
             VStack{
@@ -93,6 +83,31 @@ struct ContentView: View {
         }
         .padding()
     }
+}
+
+struct ChildSheet: View {
+	@Environment(\.dismiss) var dismiss
+	
+	@State var timePlaying: String	= ""
+	@State var timeResting: String	= ""
+	@State var hasBall: Bool		= false
+	@ObservedObject var list: ChildrenList
+	
+	var body: some View {
+		VStack {
+			TextField("Tempo de jogo", text: $timePlaying)
+			TextField("Tempo de descanso", text: $timeResting)
+			Toggle("Tem bola", isOn: $hasBall)
+			Button("Construir a criança com magia obscura") {
+				let child = Child(ball: hasBall,timePlaying: Int(timePlaying) ?? 0, timeResting: Int(timeResting) ?? 0, list: list)
+				list.children.append(child)
+				DispatchQueue.global(qos: .background).async {
+					child.run()
+				}
+				dismiss()
+			}
+		}
+	}
 }
 
 struct Animation: View {
