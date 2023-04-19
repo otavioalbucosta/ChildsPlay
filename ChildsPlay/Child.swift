@@ -6,49 +6,59 @@
 //
 
 import Foundation
+import SwiftUI
 
 
-
-class Child {
+class Child: Identifiable{
     
     var id = UUID()
-    var ball: Bool
+     var ball: Bool
     var timePlaying: Int
     var timeResting: Int
-    private var currentTime: Int = 0
+     var currentTime: Int = 0
+     var isWaiting: Bool = false
+     var list: ChildrenList
     
-    private(set) var isDead: Bool = false
     
-    init(ball: Bool = false, timePlaying: Int, timeResting: Int) {
+    init(ball: Bool, timePlaying: Int, timeResting: Int, list: ChildrenList) {
         self.ball = ball
         self.timePlaying = timePlaying
         self.timeResting = timeResting
+        self.list = list
     }
     
-    deinit {
-        isDead = true
-    }
-    @objc func incrementTimer() {
-        self.currentTime += 1
-
+    @objc func decrementTimer() {
+        self.currentTime -= 1
+        
     }
     
-    func restartTimer() {
-        self.currentTime = 0
-    }
+    
     
     func play() {
-        while(currentTime < timePlaying){
-            Timer.scheduledTimer(timeInterval: 1, target: self, selector:  #selector(incrementTimer), userInfo: nil, repeats: true)
-            print("Brincando, tempo restante: \(currentTime)")
+        currentTime = timePlaying
+        isWaiting = false
+        while(currentTime > 0){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                print("Brincando, tempo restante: \(self!.currentTime)")
+                self!.decrementTimer()
+                self?.updateView()
+            }
+            sleep(1)
         }
     }
     
     func rest() {
-        while(currentTime < timeResting){
-            Timer.scheduledTimer(timeInterval: 1, target: self, selector:  #selector(incrementTimer), userInfo: nil, repeats: true)
-            print("Descansando, tempo restante: \(currentTime)")
+        currentTime = timeResting
+        while(currentTime > 0){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                print("Descansando, tempo restante: \(self!.currentTime)")
+                self!.decrementTimer()
+                self?.updateView()
+            }
+            sleep(1)
         }
+        isWaiting = true
     }
+    
     
 }

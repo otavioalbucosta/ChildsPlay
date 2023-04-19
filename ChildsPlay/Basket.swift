@@ -7,18 +7,38 @@
 
 import Foundation
 
-class Basket {
+class Basket: ObservableObject {
     
-    var ballCount: Int
-    var maxCapacity: Int
+   @Published var ballCount: Int
+   @Published var maxCapacity: Int
+    var existentBalls: Int = 0
     
-    func addBall() {
-        ballCount += 1
+    func addBall() -> Bool{
+        if existentBalls <= maxCapacity{
+            ballCount += 1
+            return true
+        }else{
+            print("No balls")
+            return false
+        }
+        
     }
     
-    func removeBall() {
-        ballCount -= 1
+    func newBall() {
+        
     }
+    
+    func removeBall() -> Bool{
+        if ballCount > 0 {
+            ballCount -= 1
+            return true
+        }else{
+            return false
+        }
+
+    }
+    
+    
     
     init(ballCount: Int = 0, maxCapacity: Int = 0) {
         self.ballCount = ballCount

@@ -6,11 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
 
 
-
-let currentBasket = Basket()
-let basketSemaphore = DispatchSemaphore(value: 0)
+var currentBasket = Basket(maxCapacity: 5)
+var basketSemaphore = DispatchSemaphore(value: 0)
 
 
 protocol Thread {
@@ -21,12 +21,12 @@ protocol Thread {
 extension Child: Thread {
     func run() {
         DispatchQueue.global(qos: .background).async {
-            while(!self.isDead){
+            while(true){
                 if self.ball == true {
                     self.play()
-                    basketSemaphore.signal()
                     self.ball = false
                     currentBasket.addBall()
+                    basketSemaphore.signal()
                     self.rest()
                 }else {
                     basketSemaphore.wait()
@@ -39,6 +39,7 @@ extension Child: Thread {
     
     func updateView() {
         
+        self.list.children = self.list.children.map({$0})
     }
     
 }

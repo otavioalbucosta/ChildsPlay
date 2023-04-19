@@ -13,7 +13,7 @@
 		2932D94E29EDC6EF00A02A1D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2932D94D29EDC6EF00A02A1D /* Preview Assets.xcassets */; };
 		2932D95529EDC73A00A02A1D /* Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932D95429EDC73A00A02A1D /* Child.swift */; };
 		2932D95729EDC83F00A02A1D /* Basket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932D95629EDC83F00A02A1D /* Basket.swift */; };
-		2932D95B29EDCCE100A02A1D /* ThreadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932D95A29EDCCE100A02A1D /* ThreadProtocol.swift */; };
+		2932D95B29EDCCE100A02A1D /* Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932D95A29EDCCE100A02A1D /* Threads.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +24,7 @@
 		2932D94D29EDC6EF00A02A1D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2932D95429EDC73A00A02A1D /* Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Child.swift; sourceTree = "<group>"; };
 		2932D95629EDC83F00A02A1D /* Basket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basket.swift; sourceTree = "<group>"; };
-		2932D95A29EDCCE100A02A1D /* ThreadProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadProtocol.swift; sourceTree = "<group>"; };
+		2932D95A29EDCCE100A02A1D /* Threads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threads.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +60,7 @@
 				2932D95429EDC73A00A02A1D /* Child.swift */,
 				2932D95629EDC83F00A02A1D /* Basket.swift */,
 				2932D94629EDC6ED00A02A1D /* ChildsPlayApp.swift */,
-				2932D95A29EDCCE100A02A1D /* ThreadProtocol.swift */,
+				2932D95A29EDCCE100A02A1D /* Threads.swift */,
 				2932D94829EDC6ED00A02A1D /* ContentView.swift */,
 				2932D94A29EDC6EF00A02A1D /* Assets.xcassets */,
 				2932D94C29EDC6EF00A02A1D /* Preview Content */,
@@ -150,7 +150,7 @@
 				2932D95729EDC83F00A02A1D /* Basket.swift in Sources */,
 				2932D94729EDC6ED00A02A1D /* ChildsPlayApp.swift in Sources */,
 				2932D95529EDC73A00A02A1D /* Child.swift in Sources */,
-				2932D95B29EDCCE100A02A1D /* ThreadProtocol.swift in Sources */,
+				2932D95B29EDCCE100A02A1D /* Threads.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
