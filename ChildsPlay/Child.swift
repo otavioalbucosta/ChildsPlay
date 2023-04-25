@@ -12,12 +12,14 @@ import SwiftUI
 class Child: Identifiable{
     
     var id = UUID()
-     var ball: Bool
+    var ball: Bool
     var timePlaying: Int
     var timeResting: Int
-     var currentTime: Date? = nil
-     var isWaiting: Bool = false
-     var list: ChildrenList
+    var currentTime: Int = 0
+    var isWaiting: Bool = false
+    var canPlay: Bool = true
+    var list: ChildrenList
+    
     
     
     init(ball: Bool, timePlaying: Int, timeResting: Int, list: ChildrenList) {
@@ -27,39 +29,72 @@ class Child: Identifiable{
         self.list = list
     }
     
-//   @objc func decrementTimer() {
-//        self.currentTime -= 1
-//
-//        
-//    }
+    //   @objc func decrementTimer() {
+    //        self.currentTime -= 1
+    //
+    //
+    //    }
     
     
     
     func play() {
+        currentTime = timePlaying
         let time = Date()
+        var actualTime = time
         isWaiting = false
-        print(time.timeIntervalSinceNow)
         
         while(Int(-time.timeIntervalSinceNow) < timePlaying){
-            print("Brincando, tempo restante: \(time.timeIntervalSinceNow)")
-//            DispatchQueue.main.async {
-//                self.updateView()
-//            }
+            if -actualTime.timeIntervalSinceNow >= 1{
+                self.currentTime -= 1
+                actualTime = Date()
+                DispatchQueue.main.async {
+                    self.updateView()
+                }
+                print("Brincando, tempo restante: \(-time.timeIntervalSinceNow)")
+            }
             //O sleep é no while, que é no processo principal, a Thread NUNCA da sleep
             //O sleep é feito pro while não gerar Threads incessantemente
-//            sleep(1)
+            //            sleep(1)
         }
     }
     
     func rest() {
+        currentTime = timeResting
         let time = Date()
+        var actualTime = time
         while(Int(-time.timeIntervalSinceNow) < timeResting){
-            print("Descansando, tempo restante: \(time.timeIntervalSinceNow)")
+            if -actualTime.timeIntervalSinceNow >= 1{
+                currentTime -= 1
+                actualTime = Date()
+                DispatchQueue.main.async {
+                    self.updateView()
+                }
+                print("Descansando, tempo restante: \(-time.timeIntervalSinceNow)")
+            }
             
-
-//            sleep(1)
+            //            sleep(1)
         }
+        canPlay = true
         isWaiting = true
+    }
+    
+    func waitBasket() {
+        canPlay = false
+        let time = Date()
+        var actualTime = time
+        if self.ball == true {
+            while(Basket.shared.ballCount >= Basket.shared.maxCapacity){
+//                if !canPlay {break}
+                if -actualTime.timeIntervalSinceNow >= 1{
+                    currentTime = 0
+                    actualTime = Date()
+                    DispatchQueue.main.async {
+                        self.updateView()
+                    }
+                    print("Esperando o cesto abrir espaço, tempo atual: \(-time.timeIntervalSinceNow)")
+                }
+            }
+        }
     }
     
     

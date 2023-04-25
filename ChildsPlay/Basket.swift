@@ -9,16 +9,18 @@ import Foundation
 
 class Basket: ObservableObject {
     
+    static var shared = Basket()
+    
    @Published var ballCount: Int
    @Published var maxCapacity: Int
     var existentBalls: Int = 0
     
     func addBall() -> Bool{
-        if existentBalls <= maxCapacity{
+        if ballCount < maxCapacity{
             ballCount += 1
             return true
         }else{
-            print("No balls")
+            print("Ball limit")
             return false
         }
         
@@ -33,6 +35,10 @@ class Basket: ObservableObject {
             return false
         }
 
+    }
+    
+    func setCapacity(quantity: Int) {
+        self.maxCapacity = quantity
     }
     
     

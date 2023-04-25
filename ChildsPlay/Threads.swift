@@ -9,9 +9,10 @@ import Foundation
 import SwiftUI
 
 
-var currentBasket = Basket(maxCapacity: 2)
+
 // Semáforo padrão do Swift
 var basketSemaphore = DispatchSemaphore(value: 0)
+var basketOperationsSemaphore = DispatchSemaphore(value: 1)
 
 
 protocol Thread {
@@ -31,15 +32,28 @@ extension Child: Thread {
                     
                     self.play()
                     //após terminar de brincar, a criança tira a bola, adiciona no Basket e da Up no semáforo para avisar às outras threads
-                    self.ball = false
-                    currentBasket.addBall()
-                    basketSemaphore.signal()
+
+                    if Basket.shared.addBall() {
+                        self.ball = false
+                        basketSemaphore.signal()
+
+                    }else{
+                        self.waitBasket()
+                        basketOperationsSemaphore.wait()
+                        Basket.shared.addBall()
+                        self.ball = false
+                        basketSemaphore.signal()
+
+                        basketOperationsSemaphore.signal()
+                    }
+
                     // 
                     self.rest()
                 }else {
                     basketSemaphore.wait()
-                    currentBasket.removeBall()
-                    self.ball = true
+                    if Basket.shared.removeBall() {
+                        self.ball = true
+                    }
                 }
             }
         }

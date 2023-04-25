@@ -39,14 +39,19 @@ struct ContentView: View {
 									} else if !child.ball {
 										Animation(name: "comida", totalFrames: 4)
 											.scaledToFit()
-									}
+                                    } else if child.ball && !child.canPlay {
+                                        Animation(name: "basket", totalFrames: 2)
+                                    }
                                 }
                                 Spacer()
                                 VStack{
                                     Text("Tempo \(child.ball ? "jogando" : "descansando")")
 										.padding()
 										.multilineTextAlignment(.leading)
-//                                    Text("\(child.currentTime?.timeIntervalSinceNow)")
+                                    Text("\(String(child.currentTime))")
+                                    if child.ball && !child.canPlay {
+                                        Text("Esperando cesto esvaziar")
+                                    }
                                 }
 							}.frame(height: UIScreen.main.bounds.height / 12)
                         }
@@ -64,16 +69,16 @@ struct ContentView: View {
             
             VStack{
                 HStack(){
-                    Text("Balls on basket: \(currentBasket.ballCount)")
+                    Text("Balls on basket: \(Basket.shared.ballCount)")
                         .multilineTextAlignment(.leading)
                     Spacer()
                 }
                 HStack() {
-                    Text("Maximum capacity: \(currentBasket.maxCapacity)")
+                    Text("Maximum capacity: \(Basket.shared.maxCapacity)")
                         .multilineTextAlignment(.leading)
                     Spacer()
                 }
-				if currentBasket.ballCount > 0 {
+                if Basket.shared.ballCount > 0 {
 					Image("basket2")
 				} else {
 					Image("basket1")
@@ -96,8 +101,13 @@ struct ChildSheet: View {
 	var body: some View {
 		VStack {
 			TextField("Tempo de jogo", text: $timePlaying)
+                .padding()
+                .textFieldStyle(.roundedBorder)
 			TextField("Tempo de descanso", text: $timeResting)
+                .padding()
+                .textFieldStyle(.roundedBorder)
 			Toggle("Tem bola", isOn: $hasBall)
+                .padding()
 			Button("Construir a criança com magia obscura") {
 				let child = Child(ball: hasBall,timePlaying: Int(timePlaying) ?? 0, timeResting: Int(timeResting) ?? 0, list: list)
 				list.children.append(child)
