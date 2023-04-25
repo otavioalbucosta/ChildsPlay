@@ -12,6 +12,7 @@ import SwiftUI
 
 // Semáforo padrão do Swift
 var basketSemaphore = DispatchSemaphore(value: 0)
+var basketFullSemaphore: DispatchSemaphore!
 var basketOperationsSemaphore = DispatchSemaphore(value: 1)
 
 
@@ -29,28 +30,21 @@ extension Child: Thread {
             while(true){
                 // checa se a criança tem bola
                 if self.ball == true {
-                    
-                    self.play()
+                    if self.canPlay {
+                        self.play()
+                    }
                     //após terminar de brincar, a criança tira a bola, adiciona no Basket e da Up no semáforo para avisar às outras threads
-
+                    basketSemaphore.signal()
+                    basketFullSemaphore.wait()
                     if Basket.shared.addBall() {
                         self.ball = false
-                        basketSemaphore.signal()
-
-                    }else{
-                        self.waitBasket()
-                        basketOperationsSemaphore.wait()
-                        Basket.shared.addBall()
-                        self.ball = false
-                        basketSemaphore.signal()
-
-                        basketOperationsSemaphore.signal()
                     }
 
                     // 
                     self.rest()
                 }else {
                     basketSemaphore.wait()
+                    basketFullSemaphore.signal()
                     if Basket.shared.removeBall() {
                         self.ball = true
                     }
@@ -64,4 +58,29 @@ extension Child: Thread {
         self.list.children = self.list.children.map({$0})
     }
     
+}
+
+extension Basket {
+    func addBall() -> Bool {
+        if ballCount < maxCapacity{
+            ballCount += 1
+            return true
+        }else{
+
+            print("Ball limit")
+            return false
+        }
+        
+    }
+    
+    
+    func removeBall() -> Bool{
+        if ballCount > 0 {
+            ballCount -= 1
+            return true
+        }else{
+            return false
+        }
+
+    }
 }

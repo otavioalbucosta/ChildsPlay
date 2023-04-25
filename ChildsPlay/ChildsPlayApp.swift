@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct ChildsPlayApp: App {
 
-    
+
     @State var useAlert = true
     @State var quantity: Int = 0
     var body: some Scene {
@@ -29,5 +29,6 @@ struct ChildsPlayApp: App {
     
     func submit(quantity: Int) {
         Basket.shared.setCapacity(quantity: quantity)
+        basketFullSemaphore = DispatchSemaphore(value: Basket.shared.maxCapacity)
     }
 }

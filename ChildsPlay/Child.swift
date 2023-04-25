@@ -56,6 +56,7 @@ class Child: Identifiable{
             //O sleep é feito pro while não gerar Threads incessantemente
             //            sleep(1)
         }
+        canPlay = false
     }
     
     func rest() {
@@ -78,24 +79,24 @@ class Child: Identifiable{
         isWaiting = true
     }
     
-    func waitBasket() {
-        canPlay = false
-        let time = Date()
-        var actualTime = time
-        if self.ball == true {
-            while(Basket.shared.ballCount >= Basket.shared.maxCapacity){
-//                if !canPlay {break}
-                if -actualTime.timeIntervalSinceNow >= 1{
-                    currentTime = 0
-                    actualTime = Date()
-                    DispatchQueue.main.async {
-                        self.updateView()
-                    }
-                    print("Esperando o cesto abrir espaço, tempo atual: \(-time.timeIntervalSinceNow)")
-                }
-            }
-        }
-    }
+//    func waitBasket() {
+//        canPlay = false
+//        let time = Date()
+//        var actualTime = time
+//        if self.ball == true {
+//            while(Basket.shared.ballCount == Basket.shared.maxCapacity){
+////                if !canPlay {break}
+//                if -actualTime.timeIntervalSinceNow >= 1{
+//                    currentTime = 0
+//                    actualTime = Date()
+//                    DispatchQueue.main.async {
+//                        self.updateView()
+//                    }
+//                    print("Esperando o cesto abrir espaço, tempo atual: \(-time.timeIntervalSinceNow)")
+//                }
+//            }
+//        }
+//    }
     
     
 }
