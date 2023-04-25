@@ -30,24 +30,33 @@ struct ContentView: View {
 //                                    Text("\(child.id))".prefix(5))
 //                                    Text("Tem bola? \(child.ball.description)")
 //                                    Text(child.isWaiting ? "Está esperando" : "Está ativo")
-									if !child.isWaiting && child.ball {
-										Animation(name: "brinq", totalFrames: 2)
-											.scaledToFit()
-									} else if child.isWaiting  {
-										Animation(name: "child", totalFrames: 4)
-											.scaledToFit()
-									} else if !child.ball {
-										Animation(name: "comida", totalFrames: 4)
-											.scaledToFit()
-                                    } else if child.ball && !child.canPlay {
-                                        Animation(name: "basket", totalFrames: 2)
-                                    }
+//									if !child.isWaiting && child.ball {
+//										Animation(name: "brinq", totalFrames: 2) .scaledToFit()
+//									} else if child.isWaiting  {
+//										Animation(name: "child", totalFrames: 4) .scaledToFit()
+//									} else if !child.ball {
+//										Animation(name: "comida", totalFrames: 4)
+//											.scaledToFit()
+//                                    } else if child.ball && !child.canPlay {
+//                                        Animation(name: "basket", totalFrames: 2)
+//                                    }
+                                     if child.ball  {
+                                          Animation(name: "brinq", totalFrames: 2) .scaledToFit()
+                                     } else if (!child.ball && child.isWaiting) || (child.canPlay && !child.isWaiting) {
+                                          Animation(name: "child", totalFrames: 1) .scaledToFit()
+                                     } else {
+                                          Animation(name: "comida", totalFrames: 4) .scaledToFit()
+                                     }
                                 }
                                 Spacer()
                                 VStack{
-                                    Text("Tempo \(child.ball ? "jogando" : "descansando")")
-										.padding()
-										.multilineTextAlignment(.leading)
+                                    if child.ball  {
+                                        Text("Tempo jogando") .padding() .multilineTextAlignment(.leading)
+                                    } else if (!child.ball && child.isWaiting) || (child.canPlay && !child.isWaiting) {
+                                        Text("Esperando bola") .padding() .multilineTextAlignment(.leading)
+                                    } else {
+                                        Text("Tempo descansando") .padding() .multilineTextAlignment(.leading)
+                                    }
                                     Text("\(String(child.currentTime))")
                                     if child.ball && !child.canPlay {
                                         Text("Esperando cesto esvaziar")

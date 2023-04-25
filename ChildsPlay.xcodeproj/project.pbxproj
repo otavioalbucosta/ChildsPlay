@@ -19,7 +19,7 @@
 /* Begin PBXFileReference section */
 		2932D94329EDC6ED00A02A1D /* ChildsPlay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChildsPlay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2932D94629EDC6ED00A02A1D /* ChildsPlayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildsPlayApp.swift; sourceTree = "<group>"; };
-		2932D94829EDC6ED00A02A1D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2932D94829EDC6ED00A02A1D /* ContentView.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2932D94A29EDC6EF00A02A1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2932D94D29EDC6EF00A02A1D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2932D95429EDC73A00A02A1D /* Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Child.swift; sourceTree = "<group>"; };
@@ -279,7 +279,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ChildsPlay/Preview Content\"";
-				DEVELOPMENT_TEAM = 8YQ35HP37L;
+				DEVELOPMENT_TEAM = 44U668YQTW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -308,7 +308,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ChildsPlay/Preview Content\"";
-				DEVELOPMENT_TEAM = 8YQ35HP37L;
+				DEVELOPMENT_TEAM = 44U668YQTW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
