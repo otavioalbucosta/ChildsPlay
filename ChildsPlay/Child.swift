@@ -8,6 +8,13 @@
 import Foundation
 import SwiftUI
 
+enum states {
+    case hasBallIsPlaying
+    case hasBallCantPlay
+    case waiting
+    case resting
+}
+
 
 class Child: Identifiable{
     
@@ -19,6 +26,9 @@ class Child: Identifiable{
     var isWaiting: Bool = false
     var canPlay: Bool = true
     var list: ChildrenList
+    lazy var state: states = {
+        return .waiting
+    }()
     
     
     
@@ -38,6 +48,7 @@ class Child: Identifiable{
     
     
     func play() {
+        state = .hasBallIsPlaying
         currentTime = timePlaying
         let time = Date()
         var actualTime = time
@@ -57,9 +68,11 @@ class Child: Identifiable{
             //            sleep(1)
         }
         canPlay = false
+        state = .hasBallCantPlay
     }
     
     func rest() {
+        state = .resting
         currentTime = timeResting
         let time = Date()
         var actualTime = time
@@ -77,6 +90,7 @@ class Child: Identifiable{
         }
         canPlay = true
         isWaiting = true
+        state = .waiting
     }
     
 //    func waitBasket() {
