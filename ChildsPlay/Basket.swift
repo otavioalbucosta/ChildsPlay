@@ -13,7 +13,6 @@ class Basket: ObservableObject {
     
    @Published var ballCount: Int
    @Published var maxCapacity: Int
-    var existentBalls: Int = 0
     
 
     

@@ -48,13 +48,14 @@ extension Child: Thread {
                         self.updateView()
                     }
                 } else {
+                    basketSemaphore.wait()
+                    basketFullSemaphore.signal()
                     _ = Basket.shared.removeBall()
                     self.ball = true
                     DispatchQueue.main.async {
                         self.updateView()
                     }
-                    basketSemaphore.wait()
-                    basketFullSemaphore.signal()
+
 
                 }
             }
