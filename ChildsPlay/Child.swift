@@ -1,10 +1,3 @@
-//
-//  Child.swift
-//  ChildsPlay
-//
-//  Created by Otávio Albuquerque on 17/04/23.
-//
-
 import Foundation
 import SwiftUI
 
@@ -26,11 +19,9 @@ class Child: Identifiable{
     var isWaiting: Bool = false
     var canPlay: Bool = true
     var list: ChildrenList
-    lazy var state: states = {
+    lazy var state: states = {      //basicamente pedindo para que o state sempre seja .waiting quando child for iniciada pela primeira vez. precisamos do lazy dado ao funcionamento do ARC
         return .waiting
     }()
-    
-    
     
     init(ball: Bool, timePlaying: Int, timeResting: Int, list: ChildrenList) {
         self.ball = ball
@@ -39,25 +30,17 @@ class Child: Identifiable{
         self.list = list
     }
     
-    //   @objc func decrementTimer() {
-    //        self.currentTime -= 1
-    //
-    //
-    //    }
-    
-    
-    
     func play() {
-        state = .hasBallIsPlaying
-        currentTime = timePlaying
-        let time = Date()
-        var actualTime = time
-        isWaiting = false
+        state = .hasBallIsPlaying       //define estado do jogador. Isso afeta o gráfico na tela por causa do switch que tem lá na content view
+        currentTime = timePlaying       //inicia o timer de "brincadeira" do usuário
+        let time = Date()               //puxa o tempo atual
+        var actualTime = time           //define uma variável com base no tempo atual
+        isWaiting = false               //desliga a flag do isWaiting,
         
-        while(Int(-time.timeIntervalSinceNow) < timePlaying){
-            if -actualTime.timeIntervalSinceNow >= 1{
-                self.currentTime -= 1
-                actualTime = Date()
+        while(Int(-time.timeIntervalSinceNow) < timePlaying){   //primeiro, invertemos o valor que representa quanto tempo se passou desde que chamamos time. convertemos o então para inteiro e comparamos com o tempo que a child ja brincou.
+            if -actualTime.timeIntervalSinceNow >= 1{           //se quanto tempo ja se passou do inverso do temp atual foi maior ou igual a (ou seja, se ja tiver se passado pelo menos um segundo), esse if é satisfeito
+                self.currentTime -= 1                           //tempo atual que falta para a criança terminar de brincar é decrementado
+                actualTime = Date()                             //novo tempo atual é chamado
                 DispatchQueue.main.async {
                     self.updateView()
                 }
@@ -67,17 +50,18 @@ class Child: Identifiable{
             //O sleep é feito pro while não gerar Threads incessantemente
             //            sleep(1)
         }
-        canPlay = false
-        state = .hasBallCantPlay
+        canPlay = false                 //define a flag para que ele possa ser corretamente processado em outros passos
+        state = .hasBallCantPlay        //define o state para que a tela mostre-o corretamente
     }
     
     func rest() {
-        state = .resting
-        currentTime = timeResting
-        let time = Date()
-        var actualTime = time
-        while(Int(-time.timeIntervalSinceNow) < timeResting){
-            if -actualTime.timeIntervalSinceNow >= 1{
+        state = .resting                //idem a definição de state em play()
+        currentTime = timeResting       //define o timer para o tempo que falta da child descansando
+        let time = Date()               //chama a hora atual
+        var actualTime = time           //define uma variavel baseada na hora atual
+        
+        while(Int(-time.timeIntervalSinceNow) < timeResting){   //primeiro, invertemos o valor que representa quanto tempo se passou desde que chamamos time. convertemos o então para inteiro e comparamos com o tempo que a child ja descansou.
+            if -actualTime.timeIntervalSinceNow >= 1{           //praticamente igual ao que acontece em play()
                 currentTime -= 1
                 actualTime = Date()
                 DispatchQueue.main.async {
@@ -88,29 +72,9 @@ class Child: Identifiable{
             
             //            sleep(1)
         }
-        canPlay = true
-        isWaiting = true
-        state = .waiting
+        canPlay = true      //ditto
+        isWaiting = true    //ditto
+        state = .waiting    //ditto
     }
-    
-//    func waitBasket() {
-//        canPlay = false
-//        let time = Date()
-//        var actualTime = time
-//        if self.ball == true {
-//            while(Basket.shared.ballCount == Basket.shared.maxCapacity){
-////                if !canPlay {break}
-//                if -actualTime.timeIntervalSinceNow >= 1{
-//                    currentTime = 0
-//                    actualTime = Date()
-//                    DispatchQueue.main.async {
-//                        self.updateView()
-//                    }
-//                    print("Esperando o cesto abrir espaço, tempo atual: \(-time.timeIntervalSinceNow)")
-//                }
-//            }
-//        }
-//    }
-    
     
 }

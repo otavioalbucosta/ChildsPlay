@@ -1,20 +1,9 @@
-//
-//  ThreadProtocol.swift
-//  ChildsPlay
-//
-//  Created by Otávio Albuquerque on 17/04/23.
-//
-
 import Foundation
 import SwiftUI
-
-
 
 // Semáforo padrão do Swift
 var basketSemaphore = DispatchSemaphore(value: 0)
 var basketFullSemaphore: DispatchSemaphore!
-
-
 
 protocol Thread {
     func run()
@@ -22,36 +11,31 @@ protocol Thread {
 }
 
 extension Child: Thread {
-    // Lógica do semáforo
-    func run() {
-        //Cria threads assíncronas no Swift
-        //roda em background do app
-        DispatchQueue(label: "com.ChildsPlay.ChildsPlaying", qos: .utility, attributes: .concurrent).async {
+    
+    func run() {    //lógica base do semáforo
+        DispatchQueue(label: "com.ChildsPlay.ChildsPlaying", qos: .utility, attributes: .concurrent).async {    //Cria as threads do Swift em modo assíncrono e manda elas rodarem em background.
             while(true){
-                // checa se a criança tem bola
-                if self.ball == true {
-                    self.play()
-                    //após terminar de brincar, a criança tira a bola, adiciona no Basket e da Up no semáforo para avisar às outras threads
+                if self.ball == true {  // checa se a criança tem bola
+                    self.play()                     // manda a criança brincar, tirando a bola
                     DispatchQueue.main.async {
                         self.updateView()
                     }
-                    basketSemaphore.signal()
-                    basketFullSemaphore.wait()
-                    _ = Basket.shared.addBall()
-                    self.ball = false
-                    //
+                    basketSemaphore.signal()        // avisa para o semáforo de poder TIRAR que bola está sendo DEVOLVIDA
+                    basketFullSemaphore.wait()      // avisa para o semáforo de poder DEVOLVER a bola que uma foi DEVOLVIDA
+                    _ = Basket.shared.addBall()     // avisa para o singleton da basket que uma bola foi DEVOLVIDA
+                    self.ball = false               // criança não tem mais bola
                     DispatchQueue.main.async {
                         self.updateView()
                     }
-                    self.rest()
+                    self.rest()                     // criança está descansando, estando sem bola, que quebrará o loop assim que terminar de rodar
                     DispatchQueue.main.async {
                         self.updateView()
                     }
                 } else {
-                    basketSemaphore.wait()
-                    basketFullSemaphore.signal()
-                    _ = Basket.shared.removeBall()
-                    self.ball = true
+                    basketSemaphore.wait()          // avisa para o semáforo de poder TIRAR que bola está sendo TIRADA
+                    basketFullSemaphore.signal()    // avisa para o semáforo de poder DEVOLVER a bola que uma foi TIRADA
+                    _ = Basket.shared.removeBall()  // decrementa quantidade de bolas no singleton
+                    self.ball = true                // criança agora tem bola, que passará no if assim que terminar de rodar
                     DispatchQueue.main.async {
                         self.updateView()
                     }
